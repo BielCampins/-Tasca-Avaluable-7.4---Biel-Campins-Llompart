@@ -1,0 +1,4 @@
+SELECT t.elements
+FROM transactions_json_raw,
+JSON_TABLE(doc, '$.transactions[*]' COLUMNS (elements JSON PATH '$')) AS t
+WHERE CAST(JSON_EXTRACT(t.elements, '$.amount') AS DECIMAL(10,2)) > 200;
