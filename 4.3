@@ -1,6 +1,1 @@
-SELECT 
-    JSON_UNQUOTE(JSON_EXTRACT(t.elements, '$.txn_id')) AS txn_id,
-    JSON_UNQUOTE(JSON_EXTRACT(t.elements, '$.txn_date')) AS txn_date
-FROM transactions_json_raw,
-JSON_TABLE(doc, '$.transactions[*]' COLUMNS (elements JSON PATH '$')) AS t;
-
+SELECT txn_id, JSON_UNQUOTE(txn_data->'$.txn_date') AS txn_date FROM transactions;
