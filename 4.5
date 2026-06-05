@@ -1,7 +1,5 @@
 SELECT 
-    JSON_UNQUOTE(JSON_EXTRACT(t.elements, '$.account_id')) AS account_id,
-    SUM(CAST(JSON_EXTRACT(t.elements, '$.amount') AS DECIMAL(10,2))) AS total_amount
-FROM transactions_json_raw,
-JSON_TABLE(doc, '$.transactions[*]' COLUMNS (elements JSON PATH '$')) AS t
+    JSON_UNQUOTE(txn_data->'$.account_id') AS account_id,
+    SUM(JSON_UNQUOTE(txn_data->'$.amount')) AS total_amount
+FROM transactions
 GROUP BY account_id;
-
