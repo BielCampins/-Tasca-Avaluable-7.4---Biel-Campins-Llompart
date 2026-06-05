@@ -1,3 +1,2 @@
-SELECT JSON_UNQUOTE(JSON_EXTRACT(t.elements, '$.amount')) AS amount
-FROM transactions_json_raw,
-JSON_TABLE(doc, '$.transactions[*]' COLUMNS (elements JSON PATH '$')) AS t;
+SELECT JSON_UNQUOTE(txn_data->'$.amount') AS amount FROM transactions; 
+
